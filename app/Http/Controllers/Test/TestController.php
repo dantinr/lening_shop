@@ -25,4 +25,15 @@ class TestController extends Controller
 	{
 		echo __METHOD__;
 	}
+
+	public function md($m,$d)
+	{
+		echo 'm: '.$m;echo '<br>';
+		echo 'd: '.$d;echo '<br>';
+	}
+
+	public function showName($name=null)
+	{
+		var_dump($name);
+	}
 }

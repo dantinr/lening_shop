@@ -22,3 +22,11 @@ Route::get('/world1','Test\TestController@world1');
 
 Route::get('hello2','Test\TestController@hello2');
 Route::get('world2','Test\TestController@world2');
+
+
+//路由参数
+Route::get('/user/{uid}','User\UserController@user');
+Route::get('/month/{m}/date/{d}','Test\TestController@md');
+Route::get('/name/{str?}','Test\TestController@showName');
+
+
