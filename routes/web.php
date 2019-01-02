@@ -30,3 +30,7 @@ Route::get('/month/{m}/date/{d}','Test\TestController@md');
 Route::get('/name/{str?}','Test\TestController@showName');
 
 
+
+// View视图路由
+Route::view('/mvc','mvc');
+Route::view('/error','error',['code'=>403]);
