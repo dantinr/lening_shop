@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/adduser','User\UserController@add');
 
 //路由跳转
 Route::redirect('/hello1','/world1',301);
