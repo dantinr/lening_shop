@@ -28,7 +28,7 @@ Route::get('world2','Test\TestController@world2');
 
 //路由参数
 Route::get('/user/test','User\UserController@test');
-Route::get('/user/{uid}','User\UserController@user');
+//Route::get('/user/{uid}','User\UserController@user');
 Route::get('/month/{m}/date/{d}','Test\TestController@md');
 Route::get('/name/{str?}','Test\TestController@showName');
 
@@ -57,6 +57,10 @@ Route::get('/view/test2','Test\TestController@viewTest2');
 //用户注册
 Route::get('/userreg','User\UserController@reg');
 Route::post('/userreg','User\UserController@doReg');
+
+Route::get('/user/login','User\UserController@login');           //用户登录
+Route::post('/user/login','User\UserController@doLogin');        //用户登录
+
 
 //模板引入静态文件
 Route::get('/mvc/test1','Mvc\MvcController@test1');

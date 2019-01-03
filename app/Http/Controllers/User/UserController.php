@@ -48,7 +48,7 @@ class UserController extends Controller
     public function doReg(Request $request)
     {
         echo __METHOD__;
-        echo '<pre>';print_r($_POST);echo '</pre>';
+        echo '<pre>';print_r($_POST);echo '</pre>';die;
 
         $data = [
             'name'  => $request->input('u_name'),
@@ -65,6 +65,21 @@ class UserController extends Controller
        }else{
            echo '注册失败';
        }
+    }
+
+	/**
+	 * 用户登录
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function login()
+	{
+		$data = [];
+		return view('users.login',$data);
+	}
+
+    public function doLogin()
+    {
+    	echo '<pre>';print_r($_POST);echo '</pre>';
     }
 
 }
