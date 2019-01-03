@@ -77,7 +77,7 @@ class TestController extends Controller
         //echo '<pre>';print_r($list);echo '</pre>';
 
         $data = [
-            'title'     => 'Child',
+            'title'     => 'XXXX',
             'list'      => $list
         ];
 

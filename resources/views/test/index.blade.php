@@ -8,6 +8,6 @@
     <title>Laravel-Blade</title>
 </head>
 <body>
-
+    <h1>Laravel Blade</h1>
 </body>
 </html>
