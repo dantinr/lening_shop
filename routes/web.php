@@ -55,8 +55,8 @@ Route::get('/view/test2','Test\TestController@viewTest2');
 
 
 //用户注册
-Route::get('/userreg','User\UserController@reg');
-Route::post('/userreg','User\UserController@doReg');
+Route::get('/user/reg','User\UserController@reg');
+Route::post('/user/reg','User\UserController@doReg');
 
 Route::get('/user/login','User\UserController@login');           //用户登录
 Route::post('/user/login','User\UserController@doLogin');        //用户登录

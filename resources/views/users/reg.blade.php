@@ -1,19 +1,19 @@
-<!doctype html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>用户注册</title>
-</head>
-<body>
-<form action="/userreg" method="post">
-    {{csrf_field()}}
-   用户名： <input type="text" name="u_name"><br>
-    Email: <input type="text" name="u_email"><br>
-    年龄： <input type="text" name="u_age"><br>
-    <input type="submit" value="提交">
-</form>
-</body>
-</html>
+{{-- 用户注册--}}
+
+@extends('layouts.bst')
+
+@section('content')
+    <form class="form-signin" action="/user/reg" method="post">
+        {{csrf_field()}}
+        <h2 class="form-signin-heading">用户注册</h2>
+        <label for="inputNickName">Nickname</label>
+        <input type="text" name="nick_name" id="inputNickName" class="form-control" placeholder="nickname" required autofocus>
+        <label for="inputEmail">Email</label>
+        <input type="email" name="u_email" id="inputEmail" class="form-control" placeholder="@" required autofocus>
+        <label for="inputPassword" >Password</label>
+        <input type="password" name="u_pass" id="inputPassword" class="form-control" placeholder="***" required>
+        <label for="inputPassword2" >Password</label>
+        <input type="password" name="u_pass2" id="inputPassword2" class="form-control" placeholder="***" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+    </form>
+@endsection
