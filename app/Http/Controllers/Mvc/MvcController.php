@@ -16,4 +16,12 @@ class MvcController extends Controller
         ];
         return view('mvc.index',$data);
     }
+
+    public function bst()
+    {
+        $data = [
+            'title' => 'MVC-Test'
+        ];
+        return view('mvc.bst',$data);
+    }
 }

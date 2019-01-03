@@ -61,5 +61,7 @@ Route::post('/userreg','User\UserController@doReg');
 //模板引入静态文件
 Route::get('/mvc/test1','Mvc\MvcController@test1');
 
+Route::get('/mvc/bst','Mvc\MvcController@bst');
+
 
 
