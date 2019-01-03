@@ -16,6 +16,11 @@ class UserController extends Controller
 		echo $uid;
 	}
 
+	public function test()
+    {
+        echo '<pre>';print_r($_GET);echo '</pre>';
+    }
+
 	public function add()
 	{
 		$data = [
