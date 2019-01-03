@@ -52,6 +52,14 @@ Route::get('/view/test1','Test\TestController@viewTest1');
 Route::get('/view/test2','Test\TestController@viewTest2');
 
 
+
+
 //用户注册
 Route::get('/userreg','User\UserController@reg');
 Route::post('/userreg','User\UserController@doReg');
+
+//模板引入静态文件
+Route::get('/mvc/test1','Mvc\MvcController@test1');
+
+
+
