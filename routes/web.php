@@ -50,3 +50,8 @@ Route::any('/test/abc','Test\TestController@abc');
 
 Route::get('/view/test1','Test\TestController@viewTest1');
 Route::get('/view/test2','Test\TestController@viewTest2');
+
+
+//用户注册
+Route::get('/userreg','User\UserController@reg');
+Route::post('/userreg','User\UserController@doReg');
