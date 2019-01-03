@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Test;
 
+use App\Model\UserModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -62,4 +63,24 @@ class TestController extends Controller
 
 
 	}
+
+
+	public function viewTest1()
+    {
+        $data = [];
+        return view('test.index',$data);
+    }
+
+    public function viewTest2()
+    {
+        $list = UserModel::all()->toArray();
+        //echo '<pre>';print_r($list);echo '</pre>';
+
+        $data = [
+            'title'     => 'Child',
+            'list'      => $list
+        ];
+
+        return view('test.child',$data);
+    }
 }

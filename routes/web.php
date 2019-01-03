@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    echo date('Y-m-d H:i:s');
+    //return view('welcome');
 });
 
 Route::get('/adduser','User\UserController@add');
@@ -45,3 +46,7 @@ Route::get('/query/where','Test\TestController@query2');
 
 //Route::match(['get','post'],'/test/abc','Test\TestController@abc');
 Route::any('/test/abc','Test\TestController@abc');
+
+
+Route::get('/view/test1','Test\TestController@viewTest1');
+Route::get('/view/test2','Test\TestController@viewTest2');
