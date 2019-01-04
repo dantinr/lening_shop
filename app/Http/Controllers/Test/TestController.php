@@ -83,4 +83,13 @@ class TestController extends Controller
 
         return view('test.child',$data);
     }
+
+    /**
+     * Cookie 测试
+     * 2019年1月4日13:25:50
+     */
+    public function cookieTest()
+    {
+        echo '<pre>';print_r($_COOKIE);echo '</pre>';
+    }
 }

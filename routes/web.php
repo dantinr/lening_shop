@@ -12,11 +12,15 @@
 */
 
 Route::get('/', function () {
-    echo password_hash('aaaa',PASSWORD_BCRYPT);echo '</br>';
-    $rs = password_verify('aaaa','$2y$10$9ss7xo1MNEneTEYL1MGAV.rzHaSEdJ5jWNJ9ZEarEcpmiscQM9mSe');
-    var_dump($rs);die;
-    echo date('Y-m-d H:i:s');
+
+    $pass = password_hash('bbbb',PASSWORD_BCRYPT);
+    $rs = password_verify('bbbb2','$2y$10$r0fz27.UYHR7vsgyCTMy6.SLUzBbA/N714uV1.8sB9WYoxz9cDP8e');
+    var_dump($rs);
     //return view('welcome');
+});
+
+Route::get('/info',function(){
+    phpinfo();
 });
 
 Route::get('/adduser','User\UserController@add');
@@ -70,6 +74,10 @@ Route::get('/user/center','User\UserController@center');        //个人中心
 Route::get('/mvc/test1','Mvc\MvcController@test1');
 
 Route::get('/mvc/bst','Mvc\MvcController@bst');
+
+
+//Cookie
+Route::get('/test/cookie','Test\TestController@cookieTest');
 
 
 
