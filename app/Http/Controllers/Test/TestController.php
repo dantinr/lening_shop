@@ -6,7 +6,9 @@ use App\Model\UserModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+
 use DB;
+use Illuminate\Support\Facades\Session;
 
 class TestController extends Controller
 {
@@ -88,8 +90,20 @@ class TestController extends Controller
      * Cookie 测试
      * 2019年1月4日13:25:50
      */
-    public function cookieTest()
+    public function cookieTest1()
+    {
+        setcookie('cookie1','lening',time()+1200,'/','lening.com',false,true);
+        echo '<pre>';print_r($_COOKIE);echo '</pre>';
+    }
+
+    public function cookieTest2()
     {
         echo '<pre>';print_r($_COOKIE);echo '</pre>';
+    }
+
+    public function sessionTest(Request $request)
+    {
+        echo '<pre>';print_r($request->session()->all());echo '</pre>';
+        //echo '<pre>';print_r(Session::all());echo '</pre>';
     }
 }

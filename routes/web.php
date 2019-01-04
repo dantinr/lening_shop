@@ -12,10 +12,8 @@
 */
 
 Route::get('/', function () {
-
-    $pass = password_hash('bbbb',PASSWORD_BCRYPT);
-    $rs = password_verify('bbbb2','$2y$10$r0fz27.UYHR7vsgyCTMy6.SLUzBbA/N714uV1.8sB9WYoxz9cDP8e');
-    var_dump($rs);
+    //echo '<pre>';print_r($_SESSION);echo '</pre>';
+    echo '<pre>';print_r($_COOKIE);echo '</pre>';
     //return view('welcome');
 });
 
@@ -77,7 +75,9 @@ Route::get('/mvc/bst','Mvc\MvcController@bst');
 
 
 //Cookie
-Route::get('/test/cookie','Test\TestController@cookieTest');
+Route::get('/test/cookie1','Test\TestController@cookieTest1');
+Route::get('/test/cookie2','Test\TestController@cookieTest2');
+Route::get('/test/session','Test\TestController@sessionTest');
 
 
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 use App\Model\UserModel;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -48,7 +49,13 @@ class UserController extends Controller
 
     public function doReg(Request $request)
     {
-        echo '<pre>';print_r($_POST);echo '</pre>';
+
+        $nick_name = $request->input('nick_name');
+
+        $u = UserModel::where(['nick_name'=>$nick_name])->first();
+        if($u){
+            die("用户名已存在");
+        }
 
         $pass1 = $request->input('u_pass');
         $pass2 = $request->input('u_pass2');
@@ -71,7 +78,9 @@ class UserController extends Controller
        $uid = UserModel::insertGetId($data);
 
        if($uid){
-           echo '注册成功';
+           setcookie('uid',$uid,time()+86400,'/','lening.com',false,true);
+           header("Refresh:3;url=/user/center");
+           echo '注册成功,正在跳转';
        }else{
            echo '注册失败';
        }
@@ -98,6 +107,13 @@ class UserController extends Controller
 
     	if($u){
     	    if( password_verify($pass,$u->pass) ){
+
+    	        $token = substr(md5(time().mt_rand(1,99999)),10,10);
+    	        setcookie('uid',$u->uid,time()+86400,'/','lening.com',false,true);
+    	        setcookie('token',$token,time()+86400,'/user','',false,true);
+
+    	        //$request->session()->put('u_token',$token);
+
     	        header("Refresh:3;url=/user/center");
                 echo "登录成功";
             }else{
@@ -112,7 +128,13 @@ class UserController extends Controller
 
     public function center()
     {
-        echo __METHOD__;
+        if(empty($_COOKIE['uid'])){
+            header('Refresh:2;url=/user/login');
+            echo '请先登录';
+            exit;
+        }else{
+            echo 'UID: '.$_COOKIE['uid'] . ' 欢迎回来';
+        }
     }
 
 }
