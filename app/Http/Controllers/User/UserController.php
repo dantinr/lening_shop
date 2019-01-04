@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 use App\Model\UserModel;
 
@@ -47,18 +48,27 @@ class UserController extends Controller
 
     public function doReg(Request $request)
     {
-        echo __METHOD__;
-        echo '<pre>';print_r($_POST);echo '</pre>';die;
+        echo '<pre>';print_r($_POST);echo '</pre>';
+
+        $pass1 = $request->input('u_pass');
+        $pass2 = $request->input('u_pass2');
+
+
+        if($pass1 !== $pass2){
+            die("密码不一致");
+        }
+
+        $pass = password_hash($pass1,PASSWORD_BCRYPT);
 
         $data = [
-            'name'  => $request->input('u_name'),
-            'age'  => $request->input('u_age'),
+            'nick_name'  => $request->input('nick_name'),
+            'age'  => $request->input('age'),
             'email'  => $request->input('u_email'),
             'reg_time'  => time(),
+            'pass'  => $pass
         ];
 
        $uid = UserModel::insertGetId($data);
-       var_dump($uid);
 
        if($uid){
            echo '注册成功';
@@ -77,9 +87,32 @@ class UserController extends Controller
 		return view('users.login',$data);
 	}
 
-    public function doLogin()
+    public function doLogin(Request $request)
     {
     	echo '<pre>';print_r($_POST);echo '</pre>';
+
+    	$emial = $request->input('u_email');
+    	$pass = $request->input('u_pass');
+
+    	$u = UserModel::where(['email'=>$emial])->first();
+
+    	if($u){
+    	    if( password_verify($pass,$u->pass) ){
+    	        header("Refresh:3;url=/user/center");
+                echo "登录成功";
+            }else{
+    	        die("密码不正确");
+            }
+        }else{
+    	    die("用户不存在");
+        }
+
+    }
+
+
+    public function center()
+    {
+        echo __METHOD__;
     }
 
 }

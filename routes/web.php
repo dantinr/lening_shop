@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+    echo password_hash('aaaa',PASSWORD_BCRYPT);echo '</br>';
+    $rs = password_verify('aaaa','$2y$10$9ss7xo1MNEneTEYL1MGAV.rzHaSEdJ5jWNJ9ZEarEcpmiscQM9mSe');
+    var_dump($rs);die;
     echo date('Y-m-d H:i:s');
     //return view('welcome');
 });
@@ -60,6 +63,7 @@ Route::post('/user/reg','User\UserController@doReg');
 
 Route::get('/user/login','User\UserController@login');           //用户登录
 Route::post('/user/login','User\UserController@doLogin');        //用户登录
+Route::get('/user/center','User\UserController@center');        //个人中心
 
 
 //模板引入静态文件
