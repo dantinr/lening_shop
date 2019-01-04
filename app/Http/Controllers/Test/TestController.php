@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 
 
 use DB;
-use Illuminate\Support\Facades\Session;
-
 class TestController extends Controller
 {
     //
@@ -103,6 +101,7 @@ class TestController extends Controller
 
     public function sessionTest(Request $request)
     {
+        $request->session()->put('aaa','aaaaaa');
         echo '<pre>';print_r($request->session()->all());echo '</pre>';
         //echo '<pre>';print_r(Session::all());echo '</pre>';
     }

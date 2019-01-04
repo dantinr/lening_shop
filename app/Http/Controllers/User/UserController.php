@@ -112,7 +112,7 @@ class UserController extends Controller
     	        setcookie('uid',$u->uid,time()+86400,'/','lening.com',false,true);
     	        setcookie('token',$token,time()+86400,'/user','',false,true);
 
-    	        //$request->session()->put('u_token',$token);
+    	        $request->session()->put('u_token',$token);
 
     	        header("Refresh:3;url=/user/center");
                 echo "登录成功";
@@ -126,8 +126,21 @@ class UserController extends Controller
     }
 
 
-    public function center()
+    public function center(Request $request)
     {
+
+        if($_COOKIE['token'] != $request->session()->get('u_token')){
+            die("非法请求");
+        }else{
+            echo '正常请求';
+        }
+
+
+        echo 'u_token: '.$request->session()->get('u_token'); echo '</br>';
+        //echo '<pre>';print_r($request->session()->get('u_token'));echo '</pre>';
+
+        echo '<pre>';print_r($_COOKIE);echo '</pre>';
+        die;
         if(empty($_COOKIE['uid'])){
             header('Refresh:2;url=/user/login');
             echo '请先登录';
