@@ -105,4 +105,9 @@ class TestController extends Controller
         echo '<pre>';print_r($request->session()->all());echo '</pre>';
         //echo '<pre>';print_r(Session::all());echo '</pre>';
     }
+
+    public function mid1()
+    {
+        echo __METHOD__;
+    }
 }

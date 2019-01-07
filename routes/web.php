@@ -74,10 +74,12 @@ Route::get('/mvc/test1','Mvc\MvcController@test1');
 Route::get('/mvc/bst','Mvc\MvcController@bst');
 
 
-//Cookie
+//Test
 Route::get('/test/cookie1','Test\TestController@cookieTest1');
 Route::get('/test/cookie2','Test\TestController@cookieTest2');
 Route::get('/test/session','Test\TestController@sessionTest');
+Route::get('/test/mid1','Test\TestController@mid1')->middleware('check.uid');        //中间件测试
+
 
 
 //购物车
