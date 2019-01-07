@@ -80,4 +80,8 @@ Route::get('/test/cookie2','Test\TestController@cookieTest2');
 Route::get('/test/session','Test\TestController@sessionTest');
 
 
+//购物车
+Route::get('/cart','Cart\IndexController@index');
+
+
 
