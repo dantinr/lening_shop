@@ -110,4 +110,9 @@ class TestController extends Controller
     {
         echo __METHOD__;
     }
+
+    public function checkCookie()
+    {
+        echo __METHOD__;
+    }
 }

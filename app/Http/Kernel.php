@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckCookie;
 use App\Http\Middleware\CheckUid;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -60,5 +61,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         'check.uid' => CheckUid::class,
+        'check.cookie'  => CheckCookie::class,
     ];
 }
