@@ -19,16 +19,15 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         $goods = session()->get('cart_goods');
-       // echo '<pre>';print_r($goods);echo '</pre>';
-        var_dump($goods);die;
-
-        foreach($goods as $k=>$v){
-            echo 'Goods ID: '.$v;echo '</br>';
-            $detail = GoodsModel::where(['goods_id'=>$v])->first()->toArray();
-            echo '<pre>';print_r($detail);echo '</pre>';
+        if(empty($goods)){
+            echo '购物车是空的';
+        }else{
+            foreach($goods as $k=>$v){
+                echo 'Goods ID: '.$v;echo '</br>';
+                $detail = GoodsModel::where(['goods_id'=>$v])->first()->toArray();
+                echo '<pre>';print_r($detail);echo '</pre>';
+            }
         }
-
-
     }
 
 
@@ -73,15 +72,19 @@ class IndexController extends Controller
     {
         //判断 商品是否在 购物车中
         $goods = session()->get('cart_goods');
+        echo '<pre>';print_r($goods);echo '</pre>';die;
+
         if(in_array($goods_id,$goods)){
             //执行删除
-            $rs = session()->pull('cart_goods',$goods_id);
-            var_dump($rs);
+            foreach($goods as $k=>$v){
+                if($goods_id == $v){
+                    session()->pull('cart_goods.'.$k);
+                }
+            }
         }else{
             //不在购物车中
             die("商品不在购物车中");
         }
-        echo '<pre>';print_r($goods);echo '</pre>';
 
     }
 
