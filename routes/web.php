@@ -17,6 +17,8 @@ Route::get('/', function () {
     //return view('welcome');
 });
 
+Route::get('/','Home\IndexController@index');
+
 Route::get('/info',function(){
     phpinfo();
 });
@@ -87,8 +89,11 @@ Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('
 //Route::get('/cart','Cart\IndexController@index')->middleware('check.uid');
 Route::get('/cart','Cart\IndexController@index')->middleware('check.login.token');
 Route::get('/cart/add/{goods_id}','Cart\IndexController@add')->middleware('check.login.token');      //添加商品
+Route::post('/cart/add2','Cart\IndexController@add2')->middleware('check.login.token');      //添加商品
 Route::get('/cart/del/{goods_id}','Cart\IndexController@del')->middleware('check.login.token');      //删除商品
 
 
+//商品
+Route::get('/goods/{goods_id}','Goods\IndexController@index');          //商品详情
 
 

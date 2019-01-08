@@ -65,6 +65,15 @@ class IndexController extends Controller
 
     }
 
+    public function add2()
+    {
+        $response = [
+            'error' => 0,
+            'msg'   => '添加成功'
+        ];
+        return $response;
+    }
+
     /**
      * 删除商品
      */
