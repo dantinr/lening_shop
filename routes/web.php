@@ -84,7 +84,10 @@ Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('
 
 
 //购物车
-Route::get('/cart','Cart\IndexController@index');
+//Route::get('/cart','Cart\IndexController@index')->middleware('check.uid');
+Route::get('/cart','Cart\IndexController@index')->middleware('check.login.token');
+Route::get('/cart/add/{goods_id}','Cart\IndexController@add');      //添加商品
+
 
 
 

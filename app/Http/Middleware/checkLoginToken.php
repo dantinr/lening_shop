@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckUid
+class checkLoginToken
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,10 @@ class CheckUid
      */
     public function handle($request, Closure $next)
     {
-        if(empty($_COOKIE['uid'])){
+        if(!$request->session()->get('u_token')){
             header('Refresh:2;url=/user/login');
-            echo 'No UID ，请先登录';echo '</br>';
+            echo '请先登录';
+            exit;
         }
         return $next($request);
     }

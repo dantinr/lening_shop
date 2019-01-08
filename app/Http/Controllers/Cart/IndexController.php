@@ -10,20 +10,33 @@ class IndexController extends Controller
 
     public function __construct()
     {
-        $this->middleware(function($request,$next){
-            //验证是否有登录token
-            if(!session()->exists('token')){
-                header('Refresh:2;url=/user/login');
-                echo '请先登录';
-                exit();
-            }
-            return $next($request);
-        });
+
     }
 
     //
     public function index(Request $request)
     {
+        echo __METHOD__;
+    }
+
+
+    /**
+     * 添加商品
+     */
+    public function add()
+    {
 
     }
+
+    /**
+     * 删除商品
+     */
+    public function del()
+    {
+
+    }
+
+
+
+
 }
