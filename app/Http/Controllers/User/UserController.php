@@ -113,6 +113,7 @@ class UserController extends Controller
     	        setcookie('token',$token,time()+86400,'/user','',false,true);
 
     	        $request->session()->put('u_token',$token);
+    	        $request->session()->put('uid',$u->uid);
 
     	        header("Refresh:3;url=/user/center");
                 echo "登录成功";

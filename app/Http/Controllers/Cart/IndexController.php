@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cart;
 
+use App\Model\CartModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,16 +19,38 @@ class IndexController extends Controller
     //
     public function index(Request $request)
     {
-        $goods = session()->get('cart_goods');
-        if(empty($goods)){
-            echo '购物车是空的';
-        }else{
-            foreach($goods as $k=>$v){
-                echo 'Goods ID: '.$v;echo '</br>';
-                $detail = GoodsModel::where(['goods_id'=>$v])->first()->toArray();
-                echo '<pre>';print_r($detail);echo '</pre>';
+//        $goods = session()->get('cart_goods');
+//        if(empty($goods)){
+//            echo '购物车是空的';
+//        }else{
+//            foreach($goods as $k=>$v){
+//                echo 'Goods ID: '.$v;echo '</br>';
+//                $detail = GoodsModel::where(['goods_id'=>$v])->first()->toArray();
+//                echo '<pre>';print_r($detail);echo '</pre>';
+//            }
+//        }
+        $uid = session()->get('uid');
+        $cart_goods = CartModel::where(['uid'=>$uid])->get()->toArray();
+        if(empty($cart_goods)){
+            die("购物车是空的");
+        }
+
+        //echo '<pre>';print_r($cart_goods);echo '</pre>';echo '<hr>';
+        if($cart_goods){
+            //获取商品最新信息
+            foreach($cart_goods as $k=>$v){
+                $goods_info = GoodsModel::where(['goods_id'=>$v['goods_id']])->first()->toArray();
+                $goods_info['num']  = $v['num'];
+                //echo '<pre>';print_r($goods_info);echo '</pre>';
+                $list[] = $goods_info;
             }
         }
+
+        $data = [
+            'list'  => $list
+        ];
+        return view('cart.index',$data);
+
     }
 
 
@@ -65,8 +88,44 @@ class IndexController extends Controller
 
     }
 
-    public function add2()
+    /**
+     * 购物车添加商品
+     * @return array
+     */
+    public function add2(Request $request)
     {
+        $goods_id = $request->input('goods_id');
+        $num = $request->input('num');
+
+        //检查库存
+        $store_num = GoodsModel::where(['goods_id'=>$goods_id])->value('store');
+        if($store_num<=0){
+            $response = [
+                'errno' => 5001,
+                'msg'   => '库存不足'
+            ];
+            return $response;
+        }
+
+        //写入购物车表
+        $data = [
+            'goods_id'  => $goods_id,
+            'num'       => $num,
+            'add_time'  => time(),
+            'uid'       => session()->get('uid'),
+            'session_token' => session()->get('u_token')
+        ];
+
+        $cid = CartModel::insertGetId($data);
+        if(!$cid){
+            $response = [
+                'errno' => 5002,
+                'msg'   => '添加购物车失败，请重试'
+            ];
+            return $response;
+        }
+
+
         $response = [
             'error' => 0,
             'msg'   => '添加成功'
