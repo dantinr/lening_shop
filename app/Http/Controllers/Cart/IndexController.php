@@ -11,8 +11,15 @@ use App\Model\GoodsModel;
 class IndexController extends Controller
 {
 
+    public $uid;                    // 登录UID
+
+
     public function __construct()
     {
+        $this->middleware(function ($request, $next) {
+            $this->uid = session()->get('uid');
+            return $next($request);
+        });
 
     }
 
@@ -29,8 +36,7 @@ class IndexController extends Controller
 //                echo '<pre>';print_r($detail);echo '</pre>';
 //            }
 //        }
-        $uid = session()->get('uid');
-        $cart_goods = CartModel::where(['uid'=>$uid])->get()->toArray();
+        $cart_goods = CartModel::where(['uid'=>$this->uid])->get()->toArray();
         if(empty($cart_goods)){
             die("购物车是空的");
         }
@@ -97,6 +103,7 @@ class IndexController extends Controller
         $goods_id = $request->input('goods_id');
         $num = $request->input('num');
 
+
         //检查库存
         $store_num = GoodsModel::where(['goods_id'=>$goods_id])->value('store');
         if($store_num<=0){
@@ -107,12 +114,27 @@ class IndexController extends Controller
             return $response;
         }
 
+        //检查购物车重复商品
+        $cart_goods = CartModel::where(['uid'=>$this->uid])->get()->toArray();
+        if($cart_goods){
+            $goods_id_arr = array_column($cart_goods,'goods_id');
+
+            if(in_array($goods_id,$goods_id_arr)){
+                $response = [
+                    'errno' => 5002,
+                    'msg'   => '商品已在购物车中，请勿重复添加'
+                ];
+                return $response;
+            }
+        }
+
+
         //写入购物车表
         $data = [
             'goods_id'  => $goods_id,
             'num'       => $num,
             'add_time'  => time(),
-            'uid'       => session()->get('uid'),
+            'uid'       => $this->uid,
             'session_token' => session()->get('u_token')
         ];
 
@@ -154,6 +176,22 @@ class IndexController extends Controller
             die("商品不在购物车中");
         }
 
+    }
+
+    /**
+     * 删除商品
+     * 2019年1月9日15:28:46
+     * @param $goods_$abc 商品ID
+     */
+    public function del2($abc)
+    {
+        $rs = CartModel::where(['uid'=>$this->uid,'goods_id'=>$abc])->delete();
+        //echo '商品ID:  '.$abc . ' 删除成功1';
+        if($rs){
+            echo '商品ID:  '.$abc . ' 删除成功1';
+        }else{
+            echo '商品ID:  '.$abc . ' 删除成功2';
+        }
     }
 
 
