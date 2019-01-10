@@ -119,7 +119,10 @@ class TestController extends Controller
 
     public function guzzleTest()
     {
-        echo 'Hello GUZZLE';
+        //var_dump($_GET);die;
+        echo json_encode($_GET);
+        //echo '<pre>';print_r($_GET);echo '</pre>';
+        //echo 'Hello GUZZLE';
     }
 
 }
