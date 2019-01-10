@@ -115,4 +115,11 @@ class TestController extends Controller
     {
         echo __METHOD__;
     }
+
+
+    public function guzzleTest()
+    {
+        echo 'Hello GUZZLE';
+    }
+
 }
