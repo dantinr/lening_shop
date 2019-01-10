@@ -55,7 +55,22 @@ class IndexController extends Controller
 
         echo '下单成功,订单号：'.$oid .' 跳转支付';
 
+
         //清空购物车
         CartModel::where(['uid'=>session()->get('uid')])->delete();
+    }
+
+
+    /**
+     * 订单列表
+     */
+    public function orderList()
+    {
+        $list = OrderModel::where(['uid'=>session()->get('uid')])->orderBy('oid','desc')->get()->toArray();
+        $data = [
+            'list'  => $list
+        ];
+
+        return view('orders.list',$data);
     }
 }

@@ -12,12 +12,13 @@
 */
 
 Route::get('/', function () {
+    echo date('Y-m-d H:i:s');
     //echo '<pre>';print_r($_SESSION);echo '</pre>';
-    echo '<pre>';print_r($_COOKIE);echo '</pre>';
+    //echo '<pre>';print_r($_COOKIE);echo '</pre>';
     //return view('welcome');
 });
 
-Route::get('/','Home\IndexController@index');
+//Route::get('/','Home\IndexController@index');
 
 Route::get('/info',function(){
     phpinfo();
@@ -67,7 +68,7 @@ Route::post('/user/reg','User\UserController@doReg');
 
 Route::get('/user/login','User\UserController@login');           //用户登录
 Route::post('/user/login','User\UserController@doLogin');        //用户登录
-Route::get('/user/center','User\UserController@center');        //个人中心
+Route::get('/user/center','User\UserController@center')->middleware('check.login.token');        //个人中心
 
 
 //模板引入静态文件
@@ -99,6 +100,11 @@ Route::get('/goods/{goods_id}','Goods\IndexController@index');          //商品
 
 
 //订单
+Route::get('/order/list','Order\IndexController@orderList');           //订单列表
 Route::get('/order/add','Order\IndexController@add');           //下单
+
+
+//支付
+Route::get('/pay/o/{oid}','Pay\IndexController@order')->middleware('check.login.token');         //订单支付
 
 

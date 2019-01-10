@@ -127,28 +127,14 @@ class UserController extends Controller
     }
 
 
-    public function center(Request $request)
+    /**
+     * 个人中心
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function center()
     {
-
-        if($_COOKIE['token'] != $request->session()->get('u_token')){
-            die("非法请求");
-        }else{
-            echo '正常请求';
-        }
-
-
-        echo 'u_token: '.$request->session()->get('u_token'); echo '</br>';
-        //echo '<pre>';print_r($request->session()->get('u_token'));echo '</pre>';
-
-        echo '<pre>';print_r($_COOKIE);echo '</pre>';
-        die;
-        if(empty($_COOKIE['uid'])){
-            header('Refresh:2;url=/user/login');
-            echo '请先登录';
-            exit;
-        }else{
-            echo 'UID: '.$_COOKIE['uid'] . ' 欢迎回来';
-        }
+        $data = [];
+        return view('users.center',$data);
     }
 
 }

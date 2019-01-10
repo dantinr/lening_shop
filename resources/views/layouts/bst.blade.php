@@ -43,6 +43,7 @@
                             <li><a href="#">One more separated link</a></li>
                         </ul>
                     </li>
+                    <li><a href="/cart">购物车</a></li>
                     <li><a href="/user/login">登录</a></li>
                     <li><a href="/user/logou">退出</a></li>
                 </ul>

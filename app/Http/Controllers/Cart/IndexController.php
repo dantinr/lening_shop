@@ -42,6 +42,7 @@ class IndexController extends Controller
         }
 
         //echo '<pre>';print_r($cart_goods);echo '</pre>';echo '<hr>';
+        $total = 0;
         if($cart_goods){
             //获取商品最新信息
             foreach($cart_goods as $k=>$v){
@@ -49,11 +50,13 @@ class IndexController extends Controller
                 $goods_info['num']  = $v['num'];
                 //echo '<pre>';print_r($goods_info);echo '</pre>';
                 $list[] = $goods_info;
+                $total += $goods_info['price'] * $v['num'];
             }
         }
 
         $data = [
-            'list'  => $list
+            'list'      => $list,
+            'total'     => $total
         ];
         return view('cart.index',$data);
 
