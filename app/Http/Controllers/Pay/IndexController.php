@@ -29,15 +29,13 @@ class IndexController extends Controller
             die("此订单已被支付，无法再次支付");
         }
 
-        echo '<pre>';print_r($order_info);echo '</pre>';
-
         //调起支付宝支付
 
 
         //支付成功 修改支付时间
         OrderModel::where(['oid'=>$oid])->update(['pay_time'=>time(),'pay_amount'=>rand(1111,9999),'is_pay'=>1]);
 
-        //增加积分 ...
+        //增加消费积分 ...
 
         header('Refresh:2;url=/user/center');
         echo '支付成功，正在跳转';

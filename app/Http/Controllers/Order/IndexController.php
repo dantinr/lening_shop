@@ -66,11 +66,10 @@ class IndexController extends Controller
      */
     public function orderList()
     {
-        $list = OrderModel::where(['uid'=>session()->get('uid')])->orderBy('oid','desc')->get()->toArray();
+        $list = OrderModel::where(['uid'=>session()->get('uid'),'is_pay'=>0])->orderBy('oid','desc')->get()->toArray();
         $data = [
             'list'  => $list
         ];
-
         return view('orders.list',$data);
     }
 }
