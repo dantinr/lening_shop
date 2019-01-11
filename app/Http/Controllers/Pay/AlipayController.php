@@ -17,7 +17,29 @@ class AlipayController extends Controller
     public $notify_url = 'http://shop.comcto.com/pay/alipay/notify';
     public $rsaPrivateKeyFilePath = './key/priv.key';
 
+
+    /**
+     * 请求订单服务 处理订单逻辑
+     *
+     */
     public function test()
+    {
+        //
+        $url = 'http://vm.order.lening.com';
+       // $client = new Client();
+        $client = new Client([
+            'base_uri' => $url,
+            'timeout'  => 2.0,
+        ]);
+
+        $response = $client->request('GET', '/order.php');
+        echo $response->getBody();
+
+
+    }
+
+
+    public function test0()
     {
 
 //        $client = new Client([
@@ -31,14 +53,16 @@ class AlipayController extends Controller
             'out_trade_no'      => 'oid'.date('YmdHis').mt_rand(1111,2222),
             'total_amount'      => 0.01,
             'product_code'      => 'QUICK_WAP_WAY',
-            
+
         ];
 
-        $client = new Client();
-        $query = [
+        $client = new Client(
+
+        );
+        $data = [
             'app_id'   => $this->app_id,
             'method'   => 'alipay.trade.wap.pay',
-            //'format'   => 'JSON',
+            'format'   => 'JSON',
             'charset'   => 'utf-8',
             'sign_type'   => 'RSA2',
             'timestamp'   => date('Y-m-d H:i:s'),
@@ -47,17 +71,23 @@ class AlipayController extends Controller
             'biz_content'   => json_encode($bizcont),
         ];
 
-        $sign = $this->rsaSign($query);
-        $query['sign'] = $sign;
+        $sign = $this->rsaSign($data);
+        $data['sign'] = $sign;
 
         //echo '<pre>';print_r($query);echo '</pre>';die;
         //echo '<pre>';print_r($query);echo '</pre>';die;
 
         //$test_url = env('APP_URL') . '/test/guzzle';
-        //$response = $client->request('GET',$test_url,['query'=>$query]);
-        $response = $client->request('GET',$this->gate_way,['query'=>$query]);
-        //$cont = $response->getHeader('content-type');
-        echo '<pre>';print_r(json_decode($response->getBody(),true));echo '</pre>';
+        //$response = $client->request('POST',$test_url,['form_params'=>$form_params]);
+        //$response = $client->request('POST',$this->gate_way,['form_params'=>$form_params]);
+        $response = $client->request('GET',$this->gate_way,
+            [
+                'query'=>$data,
+                'debug' => true
+            ]);
+        $cont = $response->getHeader('content-type');
+        //echo '<pre>';print_r($cont);echo '</pre>';die;
+        //echo '<pre>';print_r(json_decode($response->getBody(),true));echo '</pre>';
         echo $response->getBody();die;
 
     }
@@ -92,7 +122,7 @@ class AlipayController extends Controller
             if (false === $this->checkEmpty($v) && "@" != substr($v, 0, 1)) {
 
                 // 转换成目标字符集
-                //$v = $this->characet($v, $this->postCharset);
+                $v = $this->characet($v, 'UTF-8');
                 if ($i == 0) {
                     $stringToBeSigned .= "$k" . "=" . "$v";
                 } else {
@@ -115,5 +145,25 @@ class AlipayController extends Controller
             return true;
 
         return false;
+    }
+
+
+    /**
+     * 转换字符集编码
+     * @param $data
+     * @param $targetCharset
+     * @return string
+     */
+    function characet($data, $targetCharset) {
+
+        if (!empty($data)) {
+            $fileType = 'UTF-8';
+            if (strcasecmp($fileType, $targetCharset) != 0) {
+                $data = mb_convert_encoding($data, $targetCharset, $fileType);
+            }
+        }
+
+
+        return $data;
     }
 }
