@@ -22,7 +22,7 @@ class AlipayController extends Controller
      * 请求订单服务 处理订单逻辑
      *
      */
-    public function test()
+    public function test0()
     {
         //
         $url = 'http://vm.order.lening.com';
@@ -39,14 +39,8 @@ class AlipayController extends Controller
     }
 
 
-    public function test0()
+    public function test()
     {
-
-//        $client = new Client([
-//            //'base_uri'  => env('APP_URL'),
-//            'base_uri'  => $this->gate_way,
-//            'timeout'   => 2.0,
-//        ]);
 
         $bizcont = [
             'subject'           => 'ancsd'. mt_rand(1111,9999).str_random(6),
@@ -56,9 +50,6 @@ class AlipayController extends Controller
 
         ];
 
-        $client = new Client(
-
-        );
         $data = [
             'app_id'   => $this->app_id,
             'method'   => 'alipay.trade.wap.pay',
@@ -73,23 +64,13 @@ class AlipayController extends Controller
 
         $sign = $this->rsaSign($data);
         $data['sign'] = $sign;
-
-        //echo '<pre>';print_r($query);echo '</pre>';die;
-        //echo '<pre>';print_r($query);echo '</pre>';die;
-
-        //$test_url = env('APP_URL') . '/test/guzzle';
-        //$response = $client->request('POST',$test_url,['form_params'=>$form_params]);
-        //$response = $client->request('POST',$this->gate_way,['form_params'=>$form_params]);
-        $response = $client->request('GET',$this->gate_way,
-            [
-                'query'=>$data,
-                'debug' => true
-            ]);
-        $cont = $response->getHeader('content-type');
-        //echo '<pre>';print_r($cont);echo '</pre>';die;
-        //echo '<pre>';print_r(json_decode($response->getBody(),true));echo '</pre>';
-        echo $response->getBody();die;
-
+        $param_str = '?';
+        foreach($data as $k=>$v){
+            $param_str .= $k.'='.urlencode($v) . '&';
+        }
+        $url = rtrim($param_str,'&');
+        $url = $this->gate_way . $url;
+        header("Location:".$url);
     }
 
 

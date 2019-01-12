@@ -107,7 +107,7 @@ Route::get('/order/add','Order\IndexController@add');           //下单
 
 
 //支付
-Route::get('/pay/alipay/test','Pay\AlipayController@test0');         //测试
+Route::get('/pay/alipay/test','Pay\AlipayController@test');         //测试
 Route::get('/pay/o/{oid}','Pay\IndexController@order')->middleware('check.login.token');         //订单支付
 Route::post('/pay/alipay/notify','Pay\AlipayController@notify');        //支付宝支付 通知回调
 
