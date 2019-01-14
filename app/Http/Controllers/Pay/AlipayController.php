@@ -15,6 +15,7 @@ class AlipayController extends Controller
     public $app_id;
     public $gate_way;
     public $notify_url;
+    public $return_url;
     public $rsaPrivateKeyFilePath = './key/priv.key';
 
 
@@ -23,6 +24,7 @@ class AlipayController extends Controller
         $this->app_id = env('ALIPAY_APPID');
         $this->gate_way = env('ALIPAY_GATEWAY');
         $this->notify_url = env('ALIPAY_NOTIFY_URL');
+        $this->return_url = env('ALIPAY_RETURN_URL');
     }
 
 
@@ -67,6 +69,7 @@ class AlipayController extends Controller
             'timestamp'   => date('Y-m-d H:i:s'),
             'version'   => '1.0',
             'notify_url'   => $this->notify_url,
+            'return_url'   => $this->return_url,
             'biz_content'   => json_encode($bizcont),
         ];
 
@@ -76,6 +79,7 @@ class AlipayController extends Controller
         foreach($data as $k=>$v){
             $param_str .= $k.'='.urlencode($v) . '&';
         }
+
         $url = rtrim($param_str,'&');
         $url = $this->gate_way . $url;
         header("Location:".$url);
@@ -154,5 +158,24 @@ class AlipayController extends Controller
 
 
         return $data;
+    }
+
+    /**
+     * 支付宝同步通知回调
+     */
+    public function aliReturn()
+    {
+        echo '<pre>';print_r($_GET);echo '</pre>';
+    }
+
+    /**
+     * 支付宝异步通知
+     */
+    public function aliNotify()
+    {
+        echo '<pre>';print_r($_POST);echo '</pre>';
+        $data = file_put_contents(json_encode($_POST));
+        $log_str = data('Y-m-d H:i:s') . $data . ">>>>\n";
+        file_put_contents('logs/alipay.log',$log_str,FILE_APPEND);
     }
 }
