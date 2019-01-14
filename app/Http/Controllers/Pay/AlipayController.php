@@ -168,7 +168,7 @@ class AlipayController extends Controller
     {
         echo '<pre>';print_r($_GET);echo '</pre>';
         //验签 支付宝的公钥
-        if(!$this->verify()){
+        if(!$this->verify($_GET)){
             echo 'error';
         }
 
@@ -230,12 +230,6 @@ class AlipayController extends Controller
         return $result;
     }
 
-    protected function rsaCheckV1($params, $rsaPublicKeyFilePath,$signType='RSA') {
-        $sign = $params['sign'];
-        $params['sign_type'] = null;
-        $params['sign'] = null;
-        return $this->verify($this->getSignContent($params), $sign, $rsaPublicKeyFilePath,$signType);
-    }
 
     /**
      * 处理订单逻辑 更新订单 支付状态 更新订单支付金额 支付时间
