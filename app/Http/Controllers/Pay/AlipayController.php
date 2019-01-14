@@ -175,7 +175,7 @@ class AlipayController extends Controller
     {
         $data = file_put_contents(json_encode($_POST));
         //$data = file_get_contents("php://input");
-        $log_str = date('Y-m-d H:i:s') . $data . ">>>>\n";
+        $log_str = '>>>> '.date('Y-m-d H:i:s') . $data . "<<<<\n\n";
         file_put_contents('logs/alipay.log',$log_str,FILE_APPEND);
 
         echo 'success';
