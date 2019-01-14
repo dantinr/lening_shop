@@ -17,6 +17,7 @@ class AlipayController extends Controller
     public $notify_url;
     public $return_url;
     public $rsaPrivateKeyFilePath = './key/priv.key';
+    public $aliPubKey = './key/ali_pub.key';
 
 
     public function __construct()
@@ -68,8 +69,8 @@ class AlipayController extends Controller
             'sign_type'   => 'RSA2',
             'timestamp'   => date('Y-m-d H:i:s'),
             'version'   => '1.0',
-            'notify_url'   => $this->notify_url,
-            'return_url'   => $this->return_url,
+            'notify_url'   => $this->notify_url,        //异步通知地址
+            'return_url'   => $this->return_url,        // 同步通知地址
             'biz_content'   => json_encode($bizcont),
         ];
 
@@ -166,6 +167,13 @@ class AlipayController extends Controller
     public function aliReturn()
     {
         echo '<pre>';print_r($_GET);echo '</pre>';
+        //验签 支付宝的公钥
+        if(!$this->verify()){
+            echo 'error';
+        }
+
+        //处理订单逻辑
+        $this->dealOrder($_GET);
     }
 
     /**
@@ -173,12 +181,40 @@ class AlipayController extends Controller
      */
     public function aliNotify()
     {
+
         $data = json_encode($_POST);
-        //$data = file_get_contents("php://input");
         $log_str = '>>>> '.date('Y-m-d H:i:s') . $data . "<<<<\n\n";
+        //记录日志
         file_put_contents('logs/alipay.log',$log_str,FILE_APPEND);
+        //验签
+        $res = $this->verify();
+        if($res === false){
+            echo 'error';
+            //记录日志 验签失败
+        }
+
+        //处理订单逻辑
+        $this->dealOrder($_POST);
 
         echo 'success';
+    }
 
+
+    //验签
+    function verify() {
+        return true;
+    }
+
+    /**
+     * 处理订单逻辑 更新订单 支付状态 更新订单支付金额 支付时间
+     * @param $data
+     */
+    public function dealOrder($data)
+    {
+
+
+        //加积分
+
+        //减库存
     }
 }
