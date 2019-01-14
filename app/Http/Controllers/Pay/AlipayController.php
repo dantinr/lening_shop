@@ -173,11 +173,12 @@ class AlipayController extends Controller
      */
     public function aliNotify()
     {
-        echo '<pre>';print_r($_POST);echo '</pre>';
-        //$data = file_put_contents(json_encode($_POST));
-        $data = file_get_contents("php://input");
+        $data = file_put_contents(json_encode($_POST));
+        //$data = file_get_contents("php://input");
         $log_str = date('Y-m-d H:i:s') . $data . ">>>>\n";
         file_put_contents('logs/alipay.log',$log_str,FILE_APPEND);
+
+        echo 'success';
 
     }
 }
