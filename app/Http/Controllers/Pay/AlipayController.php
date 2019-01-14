@@ -12,10 +12,18 @@ class AlipayController extends Controller
     //
 
 
-    public $app_id = '2016092500593666';
-    public $gate_way = 'https://openapi.alipaydev.com/gateway.do';
-    public $notify_url = 'http://shop.comcto.com/pay/alipay/notify';
+    public $app_id;
+    public $gate_way;
+    public $notify_url;
     public $rsaPrivateKeyFilePath = './key/priv.key';
+
+
+    public function __construct()
+    {
+        $this->app_id = env('ALIPAY_APPID');
+        $this->gate_way = env('ALIPAY_GATEWAY');
+        $this->notify_url = env('ALIPAY_NOTIFY_URL');
+    }
 
 
     /**
