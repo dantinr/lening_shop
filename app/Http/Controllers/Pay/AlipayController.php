@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pay;
 
+use App\Model\OrderModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -87,6 +88,65 @@ class AlipayController extends Controller
     }
 
 
+    /**
+     * 订单支付
+     * @param $oid
+     */
+    public function pay($oid)
+    {
+
+        //验证订单状态 是否已支付 是否是有效订单
+        $order_info = OrderModel::where(['oid'=>$oid])->first()->toArray();
+
+        //判断订单是否已被支付
+        if($order_info['is_pay']==1){
+            die("订单已支付，请勿重复支付");
+        }
+        //判断订单是否已被删除
+        if($order_info['is_delete']==1){
+            die("订单已被删除，无法支付");
+        }
+
+
+
+        //业务参数
+        $bizcont = [
+            'subject'           => 'Lening-Order: ' .$oid,
+            'out_trade_no'      => $oid,
+            'total_amount'      => $order_info['order_amount'] / 100,
+            'product_code'      => 'QUICK_WAP_WAY',
+
+        ];
+
+        //公共参数
+        $data = [
+            'app_id'   => $this->app_id,
+            'method'   => 'alipay.trade.wap.pay',
+            'format'   => 'JSON',
+            'charset'   => 'utf-8',
+            'sign_type'   => 'RSA2',
+            'timestamp'   => date('Y-m-d H:i:s'),
+            'version'   => '1.0',
+            'notify_url'   => $this->notify_url,        //异步通知地址
+            'return_url'   => $this->return_url,        // 同步通知地址
+            'biz_content'   => json_encode($bizcont),
+        ];
+
+        //签名
+        $sign = $this->rsaSign($data);
+        $data['sign'] = $sign;
+        $param_str = '?';
+        foreach($data as $k=>$v){
+            $param_str .= $k.'='.urlencode($v) . '&';
+        }
+
+        $url = rtrim($param_str,'&');
+        $url = $this->gate_way . $url;
+        header("Location:".$url);
+    }
+
+
+
     public function rsaSign($params) {
         return $this->sign($this->getSignContent($params));
     }
@@ -166,14 +226,25 @@ class AlipayController extends Controller
      */
     public function aliReturn()
     {
-        echo '<pre>';print_r($_GET);echo '</pre>';
-        //验签 支付宝的公钥
-        if(!$this->verify($_GET)){
-            echo 'error';
-        }
 
-        //处理订单逻辑
-        $this->dealOrder($_GET);
+
+        header('Refresh:2;url=/order/list');
+        echo "订单： ".$_GET['out_trade_no'] . ' 支付成功，正在跳转';
+
+//        echo '<pre>';print_r($_GET);echo '</pre>';die;
+//        //验签 支付宝的公钥
+//        if(!$this->verify($_GET)){
+//            die('簽名失敗');
+//        }
+//
+//        //验证交易状态
+////        if($_GET['']){
+////
+////        }
+////
+//
+//        //处理订单逻辑
+//        $this->dealOrder($_GET);
     }
 
     /**
@@ -197,6 +268,19 @@ class AlipayController extends Controller
         }else{
             $log_str .= " Sign OK!<<<<< \n\n";
             file_put_contents('logs/alipay.log',$log_str,FILE_APPEND);
+        }
+
+        //验证订单交易状态
+        if($_POST['trade_status']=='TRADE_SUCCESS'){
+            //更新订单状态
+            $oid = $_POST['out_trade_no'];     //商户订单号
+            $info = [
+                'is_pay'        => 1,       //支付状态  0未支付 1已支付
+                'pay_amount'    => $_POST['total_amount'] * 100,    //支付金额
+                'pay_time'      => strtotime($_POST['gmt_payment']) //支付时间
+            ];
+
+            OrderModel::where(['oid'=>$oid])->update($info);
         }
 
         //处理订单逻辑
