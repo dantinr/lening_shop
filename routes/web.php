@@ -19,6 +19,16 @@ Route::get('/', function () {
     //return view('welcome');
 });
 
+Route::group([
+    'prefix'    => '/admin/',
+],function(){
+    return 'aaa';
+});
+
+Route::get('/admin*',function(){
+    return '403';
+});
+
 //Route::get('/','Home\IndexController@index');
 
 Route::get('/info',function(){
