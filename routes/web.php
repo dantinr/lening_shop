@@ -19,6 +19,16 @@ Route::get('/', function () {
     //return view('welcome');
 });
 
+Route::group([
+    'prefix'    => '/admin/',
+],function(){
+    return 'aaa';
+});
+
+Route::get('/admin*',function(){
+    return '403';
+});
+
 //Route::get('/','Home\IndexController@index');
 
 Route::get('/info',function(){
@@ -98,7 +108,7 @@ Route::get('/cart/del2/{goods_id}','Cart\IndexController@del2')->middleware('che
 
 
 //商品
-Route::get('/goods/{goods_id}','Goods\IndexController@index');          //商品详情
+Route::get('/goods/detail/{goods_id}','Goods\IndexController@index');          //商品详情
 
 
 //订单
@@ -113,5 +123,4 @@ Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');        //支
 Route::get('/pay/alipay/return','Pay\AlipayController@aliReturn');        //支付宝支付 同步通知回调
 
 
-//计划任务
 Route::get('/crontab/delete_orders','Crontabs\IndexController@deleteOrders');        //删除过期订单
