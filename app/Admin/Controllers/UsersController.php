@@ -8,6 +8,7 @@ use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use Encore\Admin\Grid;
+use Encore\Admin\Form;
 
 use App\Model\UserModel;
 
@@ -30,7 +31,7 @@ class UsersController extends Controller
         $grid->age('年龄');
         $grid->email('邮箱');
         $grid->reg_time('注册时间')->display(function($time){
-            return date('Y-m-d H:i:s');
+            return date('Y-m-d H:i:s',$time);
         });
 
         return $grid;
@@ -42,20 +43,45 @@ class UsersController extends Controller
         echo __METHOD__;
     }
 
-    //删除
-    public function destroy($id)
-    {
-        echo __METHOD__;die;
-    }
+
 
     //创建
-    public function create()
+    public function create(Content $content)
     {
-        echo __METHOD__;die;
+        return $content
+            ->header('Create')
+            ->description('description')
+            ->body($this->form());
     }
+
+
 
     public function show($id)
     {
         echo __METHOD__;echo '</br>';
+    }
+
+    //删除
+    public function destroy($id)
+    {
+
+        $response = [
+            'status' => true,
+            'message'   => 'ok'
+        ];
+        return $response;
+    }
+
+
+
+    protected function form()
+    {
+        $form = new Form(new UserModel());
+
+        $form->text('nick_name', '昵称');
+        $form->text('age', '年龄');
+        $form->email('email', 'Email');
+
+        return $form;
     }
 }

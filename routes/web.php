@@ -98,7 +98,7 @@ Route::get('/cart/del2/{goods_id}','Cart\IndexController@del2')->middleware('che
 
 
 //商品
-Route::get('/goods/{goods_id}','Goods\IndexController@index');          //商品详情
+Route::get('/goods/detail/{goods_id}','Goods\IndexController@index');          //商品详情
 
 
 //订单
@@ -112,9 +112,5 @@ Route::get('/pay/o/{oid}','Pay\AlipayController@pay')->middleware('check.login.t
 Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');        //支付宝支付 异步通知回调
 Route::get('/pay/alipay/return','Pay\AlipayController@aliReturn');        //支付宝支付 同步通知回调
 
-
-
-//计划任务
-Route::get('/crontab/delete_orders','');
 
 
