@@ -12,7 +12,7 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 
-    $router->resource('/goods',Goods2Controller::class);
+    $router->resource('/goods',GoodsController::class);
     $router->resource('/users',UsersController::class);
 
 });

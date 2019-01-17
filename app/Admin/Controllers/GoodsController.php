@@ -2,114 +2,134 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\Dashboard;
-use Encore\Admin\Layout\Column;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Layout\Row;
-use Encore\Admin\Grid;
-use Encore\Admin\Form;
-
 use App\Model\GoodsModel;
+use App\Http\Controllers\Controller;
+use Encore\Admin\Controllers\HasResourceActions;
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
+use Encore\Admin\Show;
 
 class GoodsController extends Controller
 {
+    use HasResourceActions;
+
+    /**
+     * Index interface.
+     *
+     * @param Content $content
+     * @return Content
+     */
     public function index(Content $content)
     {
         return $content
-            ->header('商品管理')
-            ->description('商品列表')
+            ->header('Index')
+            ->description('description')
             ->body($this->grid());
     }
 
+    /**
+     * Show interface.
+     *
+     * @param mixed   $id
+     * @param Content $content
+     * @return Content
+     */
+    public function show($id, Content $content)
+    {
+        return $content
+            ->header('Detail')
+            ->description('description')
+            ->body($this->detail($id));
+    }
+
+    /**
+     * Edit interface.
+     *
+     * @param mixed   $id
+     * @param Content $content
+     * @return Content
+     */
+    public function edit($id, Content $content)
+    {
+        return $content
+            ->header('Edit')
+            ->description('description')
+            ->body($this->form()->edit($id));
+    }
+
+    /**
+     * Create interface.
+     *
+     * @param Content $content
+     * @return Content
+     */
+    public function create(Content $content)
+    {
+        return $content
+            ->header('Create')
+            ->description('description')
+            ->body($this->form());
+    }
+
+    /**
+     * Make a grid builder.
+     *
+     * @return Grid
+     */
     protected function grid()
     {
-        $grid = new Grid(new GoodsModel());
+        $grid = new Grid(new GoodsModel);
 
-        //$grid->model()->where('goods_id','>',15)->orderBy('goods_id','desc');     //倒序排序
-
-        $grid->paginate(5);
-        $grid->goods_id('ID');
-        $grid->goods_name('商品名称');
-        $grid->store('库存');
-        $grid->price('价格');
-        $grid->add_time('添加时间')->display(function($time){
-            return date('Y-m-d H:i:s',$time);
-        });
+        $grid->model()->orderBy('goods_id','desc');
+        $grid->goods_id('Goods id');
+        $grid->goods_name('Goods name');
+        //$grid->add_time('Add time');
+        $grid->store('Store');
+        //$grid->cat_id('Cat id');
+        $grid->price('Price');
+        $grid->created_at('Created at');
+        //$grid->updated_at('Updated at');
 
         return $grid;
     }
 
-
-    public function edit($id, Content $content)
+    /**
+     * Make a show builder.
+     *
+     * @param mixed   $id
+     * @return Show
+     */
+    protected function detail($id)
     {
+        $show = new Show(GoodsModel::findOrFail($id));
 
-        //echo __METHOD__;die;
-        return $content
-            ->header('商品管理')
-            ->description('编辑')
-            ->body($this->form()->edit($id));
+        $show->goods_id('Goods id');
+        $show->goods_name('Goods name');
+        $show->add_time('Add time');
+        $show->store('Store');
+        $show->cat_id('Cat id');
+        $show->price('Price');
+        $show->created_at('Created at');
+        $show->updated_at('Updated at');
+
+        return $show;
     }
 
-
-
-    //创建
-    public function create(Content $content)
-    {
-
-        return $content
-            ->header('商品管理')
-            ->description('添加')
-            ->body($this->form());
-    }
-
-    public function update($id)
-    {
-        echo '<pre>';print_r($_POST);echo '</pre>';
-    }
-
-    public function store()
-    {
-       // echo '<pre>';print_r($_POST);echo '</pre>';
-
-        $data = [
-            'goods_name'    => $_POST['goods_name'],
-            'price'    => $_POST['price'] * 100,
-            'store'    => $_POST['store'],
-        ];
-
-        GoodsModel::insert($data);
-    }
-
-
-
-    public function show($id)
-    {
-        echo __METHOD__;echo '</br>';
-    }
-
-    //删除
-    public function destroy($id)
-    {
-
-        $response = [
-            'status' => true,
-            'message'   => 'ok'
-        ];
-        return $response;
-    }
-
-
-
+    /**
+     * Make a form builder.
+     *
+     * @return Form
+     */
     protected function form()
     {
-        $form = new Form(new GoodsModel());
+        $form = new Form(new GoodsModel);
 
-        $form->display('goods_id', '商品ID');
-        $form->text('goods_name', '商品名称');
-        $form->number('store', '库存');
-        $form->currency('price', '价格')->symbol('¥');
-        //$form->text('price', '价格');
+        $form->text('goods_name', 'Goods name');
+        //$form->number('add_time', 'Add time');
+        $form->number('store', 'Store');
+        //$form->number('cat_id', 'Cat id');
+        $form->number('price', 'Price');
 
         return $form;
     }
