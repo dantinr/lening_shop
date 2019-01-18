@@ -89,12 +89,21 @@ Route::get('/mvc/bst','Mvc\MvcController@bst');
 
 
 //Test
-Route::any('/test/guzzle','Test\TestController@guzzleTest');
-Route::get('/test/cookie1','Test\TestController@cookieTest1');
-Route::get('/test/cookie2','Test\TestController@cookieTest2');
-Route::get('/test/session','Test\TestController@sessionTest');
-Route::get('/test/mid1','Test\TestController@mid1')->middleware('check.uid');        //中间件测试
-Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');        //中间件测试
+//Route::any('/test/guzzle','Test\TestController@guzzleTest');
+//Route::get('/test/cookie1','Test\TestController@cookieTest1');
+//Route::get('/test/cookie2','Test\TestController@cookieTest2');
+//Route::get('/test/session','Test\TestController@sessionTest');
+//Route::get('/test/mid1','Test\TestController@mid1')->middleware('check.uid');        //中间件测试
+//Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');        //中间件测试
+
+Route::middleware(['log.click'])->group(function(){
+    Route::any('/test/guzzle','Test\TestController@guzzleTest');
+    Route::get('/test/cookie1','Test\TestController@cookieTest1');
+    Route::get('/test/cookie2','Test\TestController@cookieTest2');
+    Route::get('/test/session','Test\TestController@sessionTest');
+    Route::get('/test/mid1','Test\TestController@mid1')->middleware('check.uid');        //中间件测试
+    Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');
+});
 
 
 
