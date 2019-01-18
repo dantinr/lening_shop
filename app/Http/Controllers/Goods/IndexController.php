@@ -38,7 +38,7 @@ class IndexController extends Controller
      */
     public function goodsList()
     {
-        $list = GoodsModel::paginate(3);
+        $list = GoodsModel::paginate(5);            //分页
 //echo '<pre>';print_r($list);echo '</pre>';die;
         $data = [
             'list'  => $list
