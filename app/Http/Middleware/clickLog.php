@@ -18,7 +18,6 @@ class clickLog
     {
         Redis::incr('click1');      //增加点击
         Redis::incrby('click2',10);      //增加点击
-        echo 'ClickLog';echo '</br>';
         return $next($request);
     }
 }
