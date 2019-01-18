@@ -118,6 +118,7 @@ Route::get('/cart/del2/{goods_id}','Cart\IndexController@del2')->middleware('che
 
 //商品
 Route::get('/goods/detail/{goods_id}','Goods\IndexController@index');          //商品详情
+Route::get('/goods/list','Goods\IndexController@goodsList');          //商品列表
 
 
 //订单

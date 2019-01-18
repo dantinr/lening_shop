@@ -32,4 +32,19 @@ class IndexController extends Controller
         ];
         return view('goods.index',$data);
     }
+
+    /**
+     * 商品列表
+     */
+    public function goodsList()
+    {
+        $list = GoodsModel::paginate(5);            //分页
+//echo '<pre>';print_r($list);echo '</pre>';die;
+        $data = [
+            'list'  => $list
+        ];
+
+        //echo '<pre>';print_r($list);echo '</pre>';die;
+        return view('goods.list',$data);
+    }
 }
