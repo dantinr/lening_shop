@@ -100,7 +100,7 @@ Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('
 
 //购物车
 //Route::get('/cart','Cart\IndexController@index')->middleware('check.uid');
-Route::get('/cart','Cart\IndexController@index')->middleware('check.login.token');
+Route::get('/cart','Cart\IndexController@index');
 Route::get('/cart/add/{goods_id}','Cart\IndexController@add')->middleware('check.login.token');      //添加商品
 Route::post('/cart/add2','Cart\IndexController@add2')->middleware('check.login.token');      //添加商品
 Route::get('/cart/del/{goods_id}','Cart\IndexController@del')->middleware('check.login.token');      //删除商品
@@ -124,3 +124,7 @@ Route::get('/pay/alipay/return','Pay\AlipayController@aliReturn');        //支�
 
 
 Route::get('/crontab/delete_orders','Crontabs\IndexController@deleteOrders');        //删除过期订单
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

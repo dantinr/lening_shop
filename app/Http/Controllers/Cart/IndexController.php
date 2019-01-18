@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Model\GoodsModel;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
@@ -16,26 +17,14 @@ class IndexController extends Controller
 
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-            $this->uid = session()->get('uid');
-            return $next($request);
-        });
+
 
     }
 
     //
     public function index(Request $request)
     {
-//        $goods = session()->get('cart_goods');
-//        if(empty($goods)){
-//            echo '购物车是空的';
-//        }else{
-//            foreach($goods as $k=>$v){
-//                echo 'Goods ID: '.$v;echo '</br>';
-//                $detail = GoodsModel::where(['goods_id'=>$v])->first()->toArray();
-//                echo '<pre>';print_r($detail);echo '</pre>';
-//            }
-//        }
+        $is_login = Auth::check();
         $cart_goods = CartModel::where(['uid'=>$this->uid])->get()->toArray();
         if(empty($cart_goods)){
             die("购物车是空的");
