@@ -103,7 +103,11 @@ Route::middleware(['log.click'])->group(function(){
     Route::get('/test/session','Test\TestController@sessionTest');
     Route::get('/test/mid1','Test\TestController@mid1')->middleware('check.uid');        //中间件测试
     Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');
+
+    Route::get('/test/url1','Test\TestController@url1');
 });
+
+Route::get('/test/end','Test\TestController@mid3')->middleware('res.end');
 
 
 

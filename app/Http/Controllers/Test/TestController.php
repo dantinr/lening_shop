@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 
 use DB;
+use Illuminate\Support\Facades\URL;
 class TestController extends Controller
 {
     //
@@ -125,6 +126,25 @@ class TestController extends Controller
         echo json_encode($_GET);
         //echo '<pre>';print_r($_GET);echo '</pre>';
         //echo 'Hello GUZZLE';
+    }
+
+    public function url1()
+    {
+
+        //echo '<pre>';print_r($_SERVER);echo '</pre>';
+        echo url('hello');echo '</br>';
+        echo url('/hello');echo '</br>';
+        echo url()->current(); echo '</br>';     //当前访问的url
+        echo url()->full();echo '</br>';
+        echo url()->previous();echo '</br>';
+echo '<hr>';
+        echo URL::current();
+
+    }
+
+    public function mid3()
+    {
+        echo __METHOD__;
     }
 
 }

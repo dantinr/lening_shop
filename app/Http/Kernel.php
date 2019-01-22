@@ -6,6 +6,7 @@ use App\Http\Middleware\CheckCookie;
 use App\Http\Middleware\checkLoginToken;
 use App\Http\Middleware\CheckUid;
 use App\Http\Middleware\clickLog;
+use App\Http\Middleware\endTest;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -69,5 +70,6 @@ class Kernel extends HttpKernel
         'check.uid' => CheckUid::class,
         'check.cookie'  => CheckCookie::class,
         'check.login.token' => checkLoginToken::class,
+        'res.end'       => endTest::class
     ];
 }
