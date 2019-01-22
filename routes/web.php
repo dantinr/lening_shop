@@ -138,3 +138,7 @@ Route::get('/crontab/delete_orders','Crontabs\IndexController@deleteOrders');   
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/upload','Goods\IndexController@uploadIndex');
+Route::post('/goods/upload/pdf','Goods\IndexController@uploadPDF');
