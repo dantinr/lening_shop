@@ -146,3 +146,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/upload','Goods\IndexController@uploadIndex');
 Route::post('/goods/upload/pdf','Goods\IndexController@uploadPDF');
+
+
+//在线订座
+Route::get('/movie/seat','Movie\IndexController@index');
