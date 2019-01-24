@@ -14,26 +14,24 @@ class IndexController extends Controller
     public function index()
     {
 
-        $key = 'test_bit';
+        $key = 'test_bit';      // redis key
 
         $seat_status = [];
         for($i=0;$i<=30;$i++){
-            //echo $i;echo '</br>';
-            $status = Redis::getBit($key,$i);
-            //var_dump($status);echo '</br>';echo '<hr>';
-
+            $status = Redis::getBit($key,$i);   //判断当前位 为0 或者 为1
             $seat_status[$i] = $status;
         }
-
 
         $data = [
             'seat'  => $seat_status
         ];
-        //echo '<pre>';print_r($seat_status);echo '</pre>';
         return view('movie.index',$data);
     }
 
-
+    /**
+     * @param $pos  座位号
+     * @param $status   0 | 1
+     */
     public function buy($pos,$status)
     {
         $key = 'test_bit';
