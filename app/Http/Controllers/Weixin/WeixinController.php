@@ -16,7 +16,8 @@ class WeixinController extends Controller
     public function test()
     {
         //echo __METHOD__;
-        $this->getWXAccessToken();
+        //$this->getWXAccessToken();
+        $this->getUserInfo(1);
     }
 
 
@@ -50,5 +51,19 @@ class WeixinController extends Controller
         }
         return $token;
 
+    }
+
+    /**
+     * 获取用户信息
+     * @param $openid
+     */
+    public function getUserInfo($openid)
+    {
+        $openid = 'oLreB1jAnJFzV_8AGWUZlfuaoQto';
+        $access_token = $this->getWXAccessToken();
+        $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN';
+
+        $data = json_decode(file_get_contents($url),true);
+        echo '<pre>';print_r($data);echo '</pre>';
     }
 }
