@@ -44,10 +44,10 @@ class WeixinController extends Controller
         $xml = simplexml_load_string($data);        //将 xml字符串 转换成对象
 
         $event = $xml->Event;                       //事件类型
-        //var_dump($xml);echo '<hr>';
+        $openid = $xml->FromUserName;               //用户openid
+        //判断事件类型
+        if($event=='subscribe'){                        //扫码关注事件
 
-        if($event=='subscribe'){
-            $openid = $xml->FromUserName;               //用户openid
             $sub_time = $xml->CreateTime;               //扫码关注时间
 
 
@@ -76,10 +76,32 @@ class WeixinController extends Controller
                 $id = WeixinUser::insertGetId($user_data);      //保存用户信息
                 var_dump($id);
             }
+        }elseif($event=='CLICK'){               //click 菜单
+            if($xml->EventKey=='kefu001'){
+                $this->kefu001($openid);
+            }
         }
 
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents('logs/wx_event.log',$log_str,FILE_APPEND);
+    }
+
+    /**
+     * 客服001
+     */
+    public function kefu001($openid)
+    {
+        // 文本消息
+        $xml_response = '
+        <xml> <ToUserName>< ![CDATA['.$openid.'] ]></ToUserName>
+         <FromUserName>< ![CDATA['.env('WEIXIN_APPID').'] ]></FromUserName> 
+         <CreateTime>'.time().'</CreateTime> 
+         <MsgType>< ![CDATA[text] ]></MsgType> 
+         <Content>< ![CDATA['. 'Hello World, 现在时间.'. date('Y-m-d H:i:s') .'] ]></Content> 
+         </xml>
+        ';
+
+        echo $xml_response;
     }
 
 
@@ -151,15 +173,21 @@ class WeixinController extends Controller
             "button"    => [
                 [
                     "type"  => "view",      // view类型 跳转指定 URL
-                    "name"  => "Lening222",
+                    "name"  => "百度一下",
                     "url"   => "https://www.baidu.com"
+                ],
+                [
+                    "type"  => "click",      // click类型
+                    "name"  => "客服01",
+                    "key"   => "kefu01"
                 ]
-            ]
+            ],
         ];
 
 
+        $body = json_encode($data,JSON_UNESCAPED_UNICODE);      //处理中文编码
         $r = $client->request('POST', $url, [
-            'body' => json_encode($data)
+            'body' => $body
         ]);
 
         // 3 解析微信接口返回信息
