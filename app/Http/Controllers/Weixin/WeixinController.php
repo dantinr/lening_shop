@@ -92,15 +92,7 @@ class WeixinController extends Controller
     public function kefu001($openid)
     {
         // 文本消息
-        $xml_response = '
-        <xml> <ToUserName>< ![CDATA['.$openid.'] ]></ToUserName>
-         <FromUserName>< ![CDATA['.env('WEIXIN_APPID').'] ]></FromUserName> 
-         <CreateTime>'.time().'</CreateTime> 
-         <MsgType>< ![CDATA[text] ]></MsgType> 
-         <Content>< ![CDATA['. 'Hello World, 现在时间.'. date('Y-m-d H:i:s') .'] ]></Content> 
-         </xml>
-        ';
-
+        $xml_response = '<xml><ToUserName>< ![CDATA['.$openid.'] ]></ToUserName><FromUserName>< ![CDATA['.env('WEIXIN_APPID').'] ]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType>< ![CDATA[text] ]></MsgType><Content>< ![CDATA['. 'Hello World, 现在时间.'. date('Y-m-d H:i:s') .'] ]></Content></xml>';
         echo $xml_response;
     }
 
