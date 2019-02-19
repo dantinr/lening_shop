@@ -78,7 +78,7 @@ class WeixinController extends Controller
             }
         }elseif($event=='CLICK'){               //click 菜单
             if($xml->EventKey=='kefu01'){
-                $this->kefu001($openid,$xml->ToUserName);
+                $this->kefu01($openid,$xml->ToUserName);
             }
         }
 
@@ -87,27 +87,15 @@ class WeixinController extends Controller
     }
 
     /**
-     * 客服001
+     * 客服处理
+     * @param $openid   用户openid
+     * @param $from     开发者公众号id 非 APPID
      */
-    public function kefu001($openid,$from)
+    public function kefu01($openid,$from)
     {
         // 文本消息
-        //header('Content-type:application/xml');
         $xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$from.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. 'Hello World, 现在时间'. date('Y-m-d H:i:s') .']]></Content></xml>';
-        //$xml_response = '<xml><ToUserName><![CDATA[oLreB1jAnJFzV_8AGWUZlfuaoQto]]></ToUserName><FromUserName><![CDATA[gh_de1c8ade602d]]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[asdfasfsdf]]></Content></xml>';
         echo $xml_response;
-        //$textTpl = "<xml>
-//                     <ToUserName><![CDATA[%s]]></ToUserName>
-//                     <FromUserName><![CDATA[%s]]></FromUserName>
-//                     <CreateTime>%s</CreateTime>
-//                     <MsgType><![CDATA[%s]]></MsgType>
-//                     <Content><![CDATA[%s]]></Content>
-//                     </xml>";
-
-        //$resultStr = sprintf($textTpl, $openid, env('WEIXIN_APPID'), time(), 'text', 'Hello World');
-        //echo $resultStr;
-
-
     }
 
 
