@@ -77,7 +77,7 @@ class WeixinController extends Controller
                 var_dump($id);
             }
         }elseif($event=='CLICK'){               //click 菜单
-            if($xml->EventKey=='kefu001'){
+            if($xml->EventKey=='kefu01'){
                 $this->kefu001($openid);
             }
         }
