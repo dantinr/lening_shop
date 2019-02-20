@@ -149,6 +149,9 @@ Route::post('/goods/upload/pdf','Goods\IndexController@uploadPDF');
 
 
 //微信
+
+
+Route::get('/weixin/refresh_token','Weixin\WeixinController@refreshToken');     //刷新token
 Route::get('/weixin/test/token','Weixin\WeixinController@test');
 Route::get('/weixin/valid','Weixin\WeixinController@validToken');
 Route::get('/weixin/valid1','Weixin\WeixinController@validToken1');
