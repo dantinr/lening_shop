@@ -280,6 +280,7 @@ class WeixinController extends Controller
     public function refreshToken()
     {
         Redis::del($this->redis_weixin_access_token);
+        echo $this->getWXAccessToken();
     }
 
 
