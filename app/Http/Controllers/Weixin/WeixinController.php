@@ -62,7 +62,7 @@ class WeixinController extends Controller
                 //视业务需求是否需要下载保存图片
                 if(1){  //下载图片素材
                     $this->dlWxImg($xml->MediaId);
-                    $xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. str_random(10) . ' >>> ' . date('Y-m-d H:i:s') .']]></Content></xml>';
+                    $xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. date('Y-m-d H:i:s') .']]></Content></xml>';
                     echo $xml_response;
                 }
             }elseif($xml->MsgType=='voice'){        //处理语音信息
@@ -126,7 +126,7 @@ class WeixinController extends Controller
         //保存图片
         $client = new GuzzleHttp\Client();
         $response = $client->get($url);
-        $h = $response->getHeaders();
+        //$h = $response->getHeaders();
         //echo '<pre>';print_r($h);echo '</pre>';die;
 
         //获取文件名
