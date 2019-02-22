@@ -169,8 +169,14 @@ Route::post('/form/test','Weixin\WeixinController@formTest');     //表单测试
 
 
 
+Route::get('/test/405','Weixin\WeixinController@http405');     //获取永久素材列表
+
+
 Route::get('/weixin/material/list','Weixin\WeixinController@materialList');     //获取永久素材列表
 Route::get('/weixin/material/upload','Weixin\WeixinController@upMaterial');     //上传永久素材
 Route::post('/weixin/material','Weixin\WeixinController@materialTest');     //创建菜单
 //Route::post('/weixin/material','Weixin\WeixinController@materialTest');     //创建菜单
+
+
+
 

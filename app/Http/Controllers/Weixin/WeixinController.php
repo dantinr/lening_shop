@@ -390,6 +390,11 @@ class WeixinController extends Controller
 
     }
 
+    public function http405()
+    {
+        echo __METHOD__;
+    }
+
 
 
 
@@ -423,12 +428,12 @@ class WeixinController extends Controller
 
 
         //保存文件
-        $save_file_path = $request->media->storeAs('form_test',$new_file_name);       //返回保存成功之后的文件路径
+        $save_file_path = $img_file->storeAs('form_test',$new_file_name);       //返回保存成功之后的文件路径
 
         echo 'save_file_path: '.$save_file_path;echo '<hr>';
 
         //上传至微信永久素材
-        $this->upMaterialTest($save_file_path);
+        //$this->upMaterialTest($save_file_path);
 
 
     }
