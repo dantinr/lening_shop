@@ -12,11 +12,9 @@
 */
 
 Route::get('/', function () {
-    echo __FILE__;echo '</br>';
-    echo date('Y-m-d H:i:s');
-    //echo '<pre>';print_r($_SESSION);echo '</pre>';
-    //echo '<pre>';print_r($_COOKIE);echo '</pre>';
-    //return view('welcome');
+    //echo __FILE__;echo '</br>';
+    //echo date('Y-m-d H:i:s');
+    return view('welcome');
 });
 
 Route::group([
