@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use DB;
 use Illuminate\Support\Facades\URL;
+
+use Illuminate\Support\Facades\Redis;
 class TestController extends Controller
 {
     //
@@ -146,5 +148,40 @@ echo '<hr>';
     {
         echo __METHOD__;
     }
+
+    public function curl1()
+    {
+
+        echo '<pre>';print_r($_SERVER);echo '</pre>';
+
+        echo $_SERVER['HTTP_USER_AGENT'];echo "\n";
+    }
+
+
+    public function curl2()
+    {
+
+        echo '<pre>';print_r($_POST);echo '</pre>';
+        echo '<pre>';print_r($_FILES);echo '</pre>';
+
+//        $arr = [
+//            'a' => 'aaaaa',
+//            'b' => 'bbbbb',
+//        ];
+//        echo json_encode($arr);
+
+        //echo '<pre>';print_r($_GET);echo '</pre>';
+        //echo '<pre>';print_r($_POST);echo '</pre>';
+    }
+
+    public function curl3()
+    {
+        $key = 'tmp:str:curl';
+        $num = Redis::incr($key);
+        echo $num;echo '</br>';
+
+    }
+
+
 
 }

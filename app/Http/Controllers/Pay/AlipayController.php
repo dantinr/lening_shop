@@ -75,7 +75,7 @@ class AlipayController extends Controller
             'biz_content'   => json_encode($bizcont),
         ];
 
-        $sign = $this->rsaSign($data);
+        $sign = $this->rsaSign($data);      //签名
         $data['sign'] = $sign;
         $param_str = '?';
         foreach($data as $k=>$v){
