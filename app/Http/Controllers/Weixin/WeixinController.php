@@ -1,5 +1,6 @@
 <?php
-
+//sdflkjsdlfkjsldkfjlskdfl
+//lsdkflskdjflskfdj
 namespace App\Http\Controllers\Weixin;
 
 use App\Model\WeixinChatModel;
@@ -231,6 +232,7 @@ class WeixinController extends Controller
         $token = Redis::get($this->redis_weixin_access_token);
         if(!$token){        // 无缓存 请求微信接口
             $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WEIXIN_APPID').'&secret='.env('WEIXIN_APPSECRET');
+            echo $url;die;
             $data = json_decode(file_get_contents($url),true);
 
             //记录缓存

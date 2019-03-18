@@ -182,5 +182,19 @@ Route::get('/weixin/chat/get_msg','Weixin\WeixinController@getChatMsg');     //�
 
 
 
+//接口通信测试
+Route::get('/api/test1','Api\TestController@test1');
+
+Route::post('/test/encrypt1','Api\TestController@encrypt1');
+
+
+//curl 测试
+Route::get('/curl/test1','Test\TestController@curl1');
+Route::any('/curl/test2','Test\TestController@curl2');
+Route::any('/curl/test3','Test\TestController@curl3');
+
+
+
+
 
 
