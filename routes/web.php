@@ -206,6 +206,8 @@ Route::get('/curl/test1','Test\TestController@curl1');
 Route::any('/curl/test2','Test\TestController@curl2');
 Route::any('/curl/test3','Test\TestController@curl3');
 
+Route::resource('/res',\Api\ResController::class);
+
 
 
 
