@@ -20,6 +20,6 @@ class VerifyCsrfToken extends Middleware
         '/weixin/material',
         '/weixin/pay/notice',
         '/curl/*',
-        '/res'
+        '/postman/*'
     ];
 }

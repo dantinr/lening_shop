@@ -208,6 +208,11 @@ Route::any('/curl/test3','Test\TestController@curl3');
 
 Route::resource('/res',\Api\ResController::class);
 
+//POSTMAN
+Route::post('/postman/test1','Postman\TestController@test1');
+Route::get('/postman/test2','Postman\TestController@test2');
+Route::get('/postman/test3','Postman\TestController@test3');
+
 
 
 
