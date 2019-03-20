@@ -197,6 +197,7 @@ Route::get('/weixin/jssdk/test','Weixin\WeixinController@jssdkTest');       // �
 
 //接口通信测试
 Route::get('/api/test1','Api\TestController@test1');
+Route::get('/api/test2','Api\TestController@test2');
 
 Route::post('/test/encrypt1','Api\TestController@encrypt1');
 

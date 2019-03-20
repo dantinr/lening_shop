@@ -28,6 +28,17 @@ class TestController extends Controller
 
     }
 
+    public function test2()
+    {
+        $arr = [
+            'name'  => 'zhangsan',
+            'age'   => 11,
+            'email' => 'zhangsan@qq.com'
+        ];
+
+        echo json_encode($arr);
+    }
+
 
     public function encrypt1()
     {
